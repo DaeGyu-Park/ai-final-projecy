@@ -20,8 +20,9 @@ def 읽기(경로):
         with open(경로, encoding="utf-8") as f:
             for 행 in csv.DictReader(f):
                 행들.append(행)
-    except:
-        return []
+    except FileNotFoundError:
+        print("파일을 찾을 수 없습니다: %s" % 경로)
+        exit(1)
     return 행들
 
 
@@ -44,7 +45,7 @@ def 정제(행들, 설정):
             버림["숫자가 아님"] += 1
             continue
 
-        if 값 < 0 or 값 >= 설정["최댓값"]:
+        if 값 < 0 or 값 > 설정["최댓값"]:
             버림["범위 밖"] += 1
             continue
 
